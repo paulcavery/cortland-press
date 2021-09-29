@@ -3,55 +3,157 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-
 import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 
-const schema = Yup.object().shape({
-	Name: Yup.string()
-		.min(2, "Too Short!")
-		.max(50, "Too Long!")
-		.required("Required"),
-	email: Yup.string().email("Invalid Email").required("Required"),
-	phone: Yup.string()
-		.min(10, "Please Provide Area Code")
-		.max(11, "Sorry, Not A Phone Number"),
-});
-
-export const ContactForm = () => {
+const phoneRegex =
+	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const ContactForm = () => {
+	const schema = Yup.object().shape({
+		name: Yup.string()
+			.min(2, "Too Short!")
+			.max(50, "Too Long!")
+			.required("Required"),
+		email: Yup.string().email("Invalid Email").required("Required"),
+		phone: Yup.string().matches(phoneRegex, "Please Enter Valid Phone Number"),
+		message: Yup.string().required("Required"),
+	});
 	return (
-		<>
-			<Formik
-				validationSchema={schema}
-				onSubmit={console.log}
-				initialValues={{
-					Name: "",
-					Email: "",
-					Phone: "",
-				}}
-			>
-				{({ handleSubmit, handleChange, values, touched, isValid, errors }) => (
-					<Form onSubmit={handleSubmit}>
-						<Row mb={3}>
-							<Form.Group
-								as={Col}
-								className="mb-5"
-								controlId="formGridName"
-								md={{ span: 8, offset: 2 }}
-							>
-								<Form.Label md={12}>First & Last Name</Form.Label>
-								<Form.Control
-									md={12}
-									placeholder="Enter Name Here"
-									type="text"
-									value={values.Name}
-									onChange={handleChange}
-									isValid={touched.Name && !errors.Name}
-								></Form.Control>
-							</Form.Group>
-						</Row>
-					</Form>
-				)}
-			</Formik>
-		</>
+		<Formik
+			validationSchema={schema}
+			onSubmit={async (values, { resetForm }) => {
+				resetForm();
+				const response = await fetch("http://localhost:3001/send", {
+					method: "POST",
+					headers: {
+						"Content-type": "application/json",
+					},
+					body: JSON.stringify({ values }),
+				})
+					.then((res) => res.json())
+					.then(async (res) => {
+						const resData = await res;
+						console.log(resData);
+						if (resData.status === "success") {
+							alert("Message Sent");
+						} else if (resData.status === "fail") {
+							alert("Message failed to send");
+						}
+					});
+			}}
+			initialValues={{
+				name: "",
+				email: "",
+				phone: "",
+				message: "",
+			}}
+		>
+			{({
+				handleSubmit,
+				handleChange,
+				values,
+				touched,
+				handleBlur,
+				errors,
+			}) => (
+				<Form noValidate onSubmit={handleSubmit}>
+					<Row mb={2}>
+						<Form.Group
+							as={Col}
+							className="mb-5"
+							controlId="formGridName"
+							md={{ span: 8, offset: 2 }}
+						>
+							<Form.Label md={12}>First & Last Name</Form.Label>
+							<Form.Control
+								md={12}
+								placeholder="Enter Name Here"
+								name="name"
+								type="text"
+								value={values.name}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								isInvalid={!!errors.name}
+							/>
+							<Form.Control.Feedback type="invalid" tooltip>
+								{errors.name}
+							</Form.Control.Feedback>
+						</Form.Group>
+					</Row>
+					<Row mb={2}>
+						<Form.Group
+							as={Col}
+							className="mb-5"
+							controlId="formGridEmail"
+							md={{ span: 4, offset: 2 }}
+						>
+							<Form.Label md={12}>Email</Form.Label>
+							<Form.Control
+								md={12}
+								name="email"
+								placeholder="Enter Email"
+								type="email"
+								value={values.email}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								isInvalid={!!errors.email}
+							/>
+							<Form.Control.Feedback type="invalid" tooltip>
+								{errors.email}
+							</Form.Control.Feedback>
+						</Form.Group>
+						<Form.Group
+							as={Col}
+							className="mb-5"
+							controlId="formGridPhone"
+							md={{ span: 4 }}
+						>
+							<Form.Label md={12}>Phone Number</Form.Label>
+							<Form.Control
+								md={12}
+								name="phone"
+								placeholder="Enter Phone Number"
+								type="tel"
+								value={values.phone}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								isInvalid={!!errors.phone}
+							/>
+							<Form.Control.Feedback type="invalid" tooltip>
+								{errors.phone}
+							</Form.Control.Feedback>
+						</Form.Group>
+					</Row>
+					<Row mb={2}>
+						<Form.Group
+							as={Col}
+							controlId="formGridMessage"
+							md={{ span: 8, offset: 2 }}
+						>
+							<Form.Label md={12}>Message</Form.Label>
+							<Form.Control
+								md={12}
+								as="textarea"
+								style={{ height: "150px" }}
+								name="message"
+								placeholder="Enter Message"
+								type="text"
+								value={values.message}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								isInvalid={!!errors.message}
+							/>
+						</Form.Group>
+					</Row>
+					<Row>
+						<Col md="4" />
+						<Button variant="secondary" type="submit" size="lg">
+							Submit
+						</Button>
+					</Row>
+				</Form>
+			)}
+		</Formik>
 	);
 };
+export default ContactForm;

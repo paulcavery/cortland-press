@@ -6,8 +6,12 @@ var nodemailer = require("nodemailer");
 
 var app = express();
 
+var cors = require("cors");
+
 require("dotenv").config();
 
+app.use(express.json());
+app.use(cors());
 var transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -24,18 +28,21 @@ transporter.verify(function (err, success) {
 });
 app.post("/send", function (req, res) {
   var mailOptions = {
-    from: "test@gmail.com",
+    from: "".concat(req.body.values.email),
     to: process.env.EMAIL,
-    subject: "Nodemailer API",
-    text: "Hi from your nodemailer API"
+    subject: "Message From: ".concat(req.body.values.email),
+    text: "".concat(req.body.values.message)
   };
   transporter.sendMail(mailOptions, function (err, data) {
     if (err) {
+      res.json({
+        status: "fail"
+      });
       console.log("Error: " + err);
     } else {
       console.log("Email sent successfully");
       res.json({
-        status: "Email Sent"
+        status: "success"
       });
     }
   });
