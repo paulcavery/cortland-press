@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _printer = _interopRequireDefault(require("../assets/desktop/printer.svg"));
+
 var _colorSwatch = _interopRequireDefault(require("../../src/assets/desktop/colorSwatch.svg"));
 
 var _sign = _interopRequireDefault(require("../assets/desktop/sign.svg"));
@@ -18,32 +20,22 @@ var _bindery = _interopRequireDefault(require("../assets/desktop/bindery.svg"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var CardInfo = [{
-  picture: "../assets/desktop/printer.svg",
+  picture: _printer["default"],
   title: "Offset & Digital Printing"
 }, {
-  picture: {
-    ColorSwatch: _colorSwatch["default"]
-  },
+  picture: _colorSwatch["default"],
   title: "Black and White & Full Color Printing"
 }, {
-  picture: {
-    Signs: _sign["default"]
-  },
+  picture: _sign["default"],
   title: "Signs & Banners"
 }, {
-  picture: {
-    Graphic: _graphic["default"]
-  },
+  picture: _graphic["default"],
   title: "Complete Graphic Design Department"
 }, {
-  picture: {
-    BusinessCard: _businessCard["default"]
-  },
+  picture: _businessCard["default"],
   title: "Promotional Products"
 }, {
-  picture: {
-    Bindery: _bindery["default"]
-  },
+  picture: _bindery["default"],
   title: "Complete Bindery Services"
 }];
 var _default = CardInfo;

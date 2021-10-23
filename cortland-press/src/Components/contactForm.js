@@ -5,6 +5,8 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import styled from "styled-components";
+import { PoppinsFont, PoppinsFontWeight, below } from "../utilities";
 
 const phoneRegex =
 	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -56,7 +58,7 @@ const ContactForm = () => {
 				handleBlur,
 				errors,
 			}) => (
-				<Form noValidate onSubmit={handleSubmit}>
+				<StyledForm noValidate onSubmit={handleSubmit}>
 					<Row mb={2}>
 						<Form.Group
 							as={Col}
@@ -147,13 +149,29 @@ const ContactForm = () => {
 					</Row>
 					<Row>
 						<Col md="4" />
-						<Button variant="secondary" type="submit" size="lg">
+						<StyledButton variant="secondary" type="submit" size="lg">
 							Submit
-						</Button>
+						</StyledButton>
 					</Row>
-				</Form>
+				</StyledForm>
 			)}
 		</Formik>
 	);
 };
+const StyledForm = styled(Form)`
+	color: #333;
+	font: ${PoppinsFontWeight.Medium} 17px ${PoppinsFont};
+`;
+const StyledButton = styled(Button)`
+	width: 20rem;
+	letter-spacing: 0.25rem;
+	margin-top: 2rem;
+	background-color: #333;
+	:hover {
+		background-color: #6c757d;
+	}
+	${below.med`
+		margin: 2rem auto;
+	`}
+`;
 export default ContactForm;

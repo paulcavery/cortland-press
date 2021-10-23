@@ -8,29 +8,32 @@ import { PoppinsFontWeight, PoppinsFont } from "../utilities";
 
 const Header = () => {
 	return (
-		<StyledNavbar>
+		<StyledNavbar sticky="top" collapseOnSelect expand="lg">
 			<StyledNavBrand>
 				<img src={CompanyLogo} alt="Cortland Press Logo" />
 			</StyledNavBrand>
-			<Container>
-				<Nav className="me-auto">
-					<StyledNavLink className="navLink" href="#home">
-						Home
-					</StyledNavLink>
-					<StyledNavLink className="navLink" href="#services">
-						Services
-					</StyledNavLink>
-					<StyledNavLink className="navLink" href="#about">
-						About
-					</StyledNavLink>
-					<StyledNavLink className="navLink" href="#location">
-						Location
-					</StyledNavLink>
-					<StyledNavLink className="navLink" href="#contact">
-						Contact
-					</StyledNavLink>
-				</Nav>
-			</Container>
+			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+			<Navbar.Collapse id="responsive-navbar-nav">
+				<Container>
+					<Nav className="me-auto">
+						<StyledNavLink className="navLink" href="#home">
+							Home
+						</StyledNavLink>
+						<StyledNavLink className="navLink" href="#services">
+							Services
+						</StyledNavLink>
+						<StyledNavLink className="navLink" href="#about">
+							About
+						</StyledNavLink>
+						<StyledNavLink className="navLink" href="#location">
+							Location
+						</StyledNavLink>
+						<StyledNavLink className="navLink" href="#contact">
+							Contact
+						</StyledNavLink>
+					</Nav>
+				</Container>
+			</Navbar.Collapse>
 		</StyledNavbar>
 	);
 };
@@ -40,13 +43,14 @@ const StyledNavbar = styled(Navbar)`
 `;
 const StyledNavLink = styled(Nav.Link)`
 	margin: auto 2rem;
+	color: #333;
 	font: ${PoppinsFontWeight.SemiBold} 18px ${PoppinsFont};
 	&:hover {
 		text-decoration: underline;
 	}
 `;
 const StyledNavBrand = styled(Navbar.Brand)`
-	margin-left: 10%;
+	margin-left: 20%;
 `;
 
 export default Header;

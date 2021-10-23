@@ -1,3 +1,4 @@
+import Printer from "../assets/desktop/printer.svg";
 import ColorSwatch from "../../src/assets/desktop/colorSwatch.svg";
 import Signs from "../assets/desktop/sign.svg";
 import Graphic from "../assets/desktop/graphic.svg";
@@ -6,27 +7,27 @@ import Bindery from "../assets/desktop/bindery.svg";
 
 const CardInfo = [
 	{
-		picture: "../assets/desktop/printer.svg",
+		picture: Printer,
 		title: "Offset & Digital Printing",
 	},
 	{
-		picture: { ColorSwatch },
+		picture: ColorSwatch,
 		title: "Black and White & Full Color Printing",
 	},
 	{
-		picture: { Signs },
+		picture: Signs,
 		title: "Signs & Banners",
 	},
 	{
-		picture: { Graphic },
+		picture: Graphic,
 		title: "Complete Graphic Design Department",
 	},
 	{
-		picture: { BusinessCard },
+		picture: BusinessCard,
 		title: "Promotional Products",
 	},
 	{
-		picture: { Bindery },
+		picture: Bindery,
 		title: "Complete Bindery Services",
 	},
 ];

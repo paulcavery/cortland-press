@@ -2,8 +2,8 @@ import { css } from "styled-components";
 
 export const size = {
 	small: 640,
-	med: 768,
-	large: 1024,
+	med: 825,
+	large: 1250,
 };
 
 // Setting above media queries
