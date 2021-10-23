@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CardInfo from "../Data/CardInfo";
 import PrintCard from "./card";
-import { PoppinsFont, PoppinsFontWeight, below } from "../utilities";
+import { PoppinsFont, PoppinsFontWeight } from "../utilities";
 const RepeatCard = () => {
 	return CardInfo.map((info) => {
 		console.log(info);
