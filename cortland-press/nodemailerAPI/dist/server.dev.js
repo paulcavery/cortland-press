@@ -34,6 +34,8 @@ app.post("/send", function (req, res) {
     text: "".concat(req.body.values.message)
   };
   transporter.sendMail(mailOptions, function (err, data) {
+    console.log(data);
+
     if (err) {
       res.json({
         status: "fail"
@@ -47,7 +49,7 @@ app.post("/send", function (req, res) {
     }
   });
 });
-var port = 3001;
+var port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log("Server is running on port: ".concat(port));
 });
