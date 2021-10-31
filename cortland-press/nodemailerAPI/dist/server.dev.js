@@ -49,7 +49,7 @@ app.post("/send", function (req, res) {
     }
   });
 });
-var port = process.env.PORT || 3000;
+var port = 3001;
 app.listen(port, function () {
   console.log("Server is running on port: ".concat(port));
 });
