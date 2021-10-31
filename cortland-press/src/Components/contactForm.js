@@ -25,7 +25,7 @@ const ContactForm = () => {
 			validationSchema={schema}
 			onSubmit={async (values, { resetForm }) => {
 				resetForm();
-				await fetch("/send", {
+				await fetch("http://localhost:3001/send", {
 					method: "POST",
 					headers: {
 						"Content-type": "application/json",
