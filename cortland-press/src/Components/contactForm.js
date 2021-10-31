@@ -25,13 +25,16 @@ const ContactForm = () => {
 			validationSchema={schema}
 			onSubmit={async (values, { resetForm }) => {
 				resetForm();
-				await fetch("http://localhost:3001/send", {
-					method: "POST",
-					headers: {
-						"Content-type": "application/json",
-					},
-					body: JSON.stringify({ values }),
-				})
+				await fetch(
+					"https://cortland-press-r04ucl6rw-paulcavery.vercel.app/send",
+					{
+						method: "POST",
+						headers: {
+							"Content-type": "application/json",
+						},
+						body: JSON.stringify({ values }),
+					}
+				)
 					.then((res) => res.json())
 					.then(async (res) => {
 						const resData = await res;
