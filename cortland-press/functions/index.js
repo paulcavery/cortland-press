@@ -1,20 +1,27 @@
+const functions = require("firebase-functions");
 const express = require("express");
-const nodemailer = require("nodemailer");
 const app = express();
 const cors = require("cors");
-require("dotenv").config();
+const admin = require("firebase-admin");
+const nodemailer = require("nodemailer");
+
+admin.initializeApp();
 
 app.use(express.json());
 app.use(cors());
+
+let { username, password, refreshtoken, clientid, clientsecret } =
+	functions.config().config;
+
 let transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
 		type: "OAUTH2",
-		user: process.env.EMAIL,
-		pass: process.env.PASSWORD,
-		clientId: process.env.OAUTH_CLIENTID,
-		clientSecret: process.env.OAUTH_CLIENT_SECRET,
-		refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+		user: username,
+		pass: password,
+		clientId: clientid,
+		clientSecret: clientsecret,
+		refreshToken: refreshtoken,
 	},
 });
 
@@ -27,7 +34,7 @@ transporter.verify((err, success) => {
 app.post("/send", (req, res) => {
 	let mailOptions = {
 		from: `${req.body.values.email}`,
-		to: process.env.EMAIL,
+		to: username,
 		subject: `Message From: ${req.body.values.email}`,
 		text: `${req.body.values.message}`,
 	};
@@ -44,8 +51,11 @@ app.post("/send", (req, res) => {
 		}
 	});
 });
-
-const port = 3001;
-app.listen(port, () => {
-	console.log(`Server is running on port: ${port}`);
-});
+exports.app = functions.https.onRequest(app);
+// // Create and Deploy Your First Cloud Functions
+// // https://firebase.google.com/docs/functions/write-firebase-functions
+//
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//   functions.logger.info("Hello logs!", {structuredData: true});
+//   response.send("Hello from Firebase!");
+// });
