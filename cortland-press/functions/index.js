@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 admin.initializeApp();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: true }));
 
 let { username, password, refreshtoken, clientid, clientsecret } =
 	functions.config().config;

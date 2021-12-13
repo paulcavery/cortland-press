@@ -14,7 +14,9 @@ var nodemailer = require("nodemailer");
 
 admin.initializeApp();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: true
+}));
 var _functions$config$con = functions.config().config,
     username = _functions$config$con.username,
     password = _functions$config$con.password,
